@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'environ',
+    'django_apscheduler',
 
     'users',
     'med',
@@ -145,3 +146,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
+
+EMAIL_HOST = env('EMAIL_HOST'),
+EMAIL_PORT = env('EMAIL_PORT'),
+EMAIL_HOST_USER = env('EMAIL_HOST_USER'),
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD'),
+EMAIL_USE_SSL = True
+
+CACHES = {
+    "default": {
+        "BACKEND": env('BACKEND'),
+        "LOCATION": env('LOCATION'),
+    }
+}
