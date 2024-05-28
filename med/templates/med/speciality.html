@@ -1,0 +1,30 @@
+{% extends 'med/base.html' %}
+{% load static %}
+
+
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block content %}
+<div class="container px-4 px-lg-5 my-5">
+    <div class="row gx-4 gx-lg-5 align-items-center">
+        <h1 class="display-5 fw-bolder">{{ speciality.title }}</h1>
+    </div>
+
+    {% if speciality.description %}
+    <p class="lead">{{ speciality.description }}</p>
+    {% endif %}
+</div>
+<h2>Наши специалисты:</h2>
+<div class="d-flex">
+
+
+    {% for d in doctor %}
+    <div class="col-lg-4">
+        <hr class="featurette-divider">
+        <h4>{{ d.first_name}} {{ d.last_name}}</h4>
+    </div>
+
+    {% endfor %}
+</div>
+
+{% endblock %}
