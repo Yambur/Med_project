@@ -15,24 +15,21 @@ from users.forms import RegisterForm, UserForm
 from users.models import User
 
 
-class RegisterView(CreateView, StileFormMixin):
+class RegisterView(CreateView):
     model = User
     form_class = RegisterForm
     success_url = reverse_lazy('users:login')
     template_name = 'users/register.html'
 
     def form_valid(self, form):
-        new_user = form.save(commit=False)
-        new_user.is_active = False
-        new_user.save()
-
-        send_mail(subject='Подтверждение адреса электронной почты',
-                  message=f'Код для подтверждения {new_user.verify_code}',
-                  from_email=settings.EMAIL_HOST_USER,
-                  recipient_list=[new_user.email],
-                  )
-
-        return redirect(reverse_lazy('users:verify_code'))
+        new_user = form.save()
+        send_mail(
+            subject='Поздравляем с регистрацией',
+            message='Вы зарегались на нашей платформе!',
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[new_user.email]
+            )
+        return super().form_valid(form)
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView, StileFormMixin):
@@ -44,7 +41,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView, StileFormMixin):
         return self.request.user
 
 
-class VerifyCodeView(View, StileFormMixin):
+"""class VerifyCodeView(View, StileFormMixin):
     template_name = 'users/verify_code.html'
     success_url = reverse_lazy('med:base')
 
@@ -60,13 +57,13 @@ class VerifyCodeView(View, StileFormMixin):
             user.save()
             return redirect('users:login')
         else:
-            return redirect('users:register')
+            return redirect('users:register')"""
 
 
-@login_required
+"""@login_required
 def get_new_password(request):
     new_password = ''.join([str(secrets.token_urlsafe(5))])
     request.user.set_password(new_password)
     request.user.save()
     send_new_password(request.user.email, new_password)
-    return redirect(reverse('users:login'))
+    return redirect(reverse('users:login'))"""
