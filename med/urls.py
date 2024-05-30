@@ -1,7 +1,6 @@
 from .views import *
 from django.urls import path
 from med.apps import MedConfig
-from django.views.decorators.cache import cache_page
 
 app_name = MedConfig.name
 

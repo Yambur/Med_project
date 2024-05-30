@@ -1,13 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from .models import User
-from django.contrib.auth import get_user
-from django.template import loader
 from .models import *
-from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
-from .forms import AppointmentForm
+from django.views.generic import ListView, DetailView
 from django.urls import reverse_lazy
-from django.forms import inlineformset_factory
 from datetime import datetime
 from django.views.generic.base import View
 from django.shortcuts import redirect, get_object_or_404
