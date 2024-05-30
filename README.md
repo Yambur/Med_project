@@ -34,8 +34,8 @@ ___
 
 Для автоматического создания администратора с полным набором прав необходимо прописать в консоли команду:
 
-- .\manage.py csu - на windows
-- python3 manage.py csu - на linux
+- .\manage.py ccsu - на windows
+- python3 manage.py ccsu - на linux
 
 ___
 
