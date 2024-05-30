@@ -3,11 +3,15 @@ from django.core.mail import send_mail
 from django.urls import reverse_lazy
 
 from django.views.generic import CreateView, UpdateView
-
+from django.contrib.auth.views import LoginView as BaseLoginView
 from config import settings
 from med.services import StileFormMixin
 from users.forms import RegisterForm, UserForm
 from users.models import User
+
+
+class LoginView(BaseLoginView):
+    template_name = 'users/login.html'
 
 
 class RegisterView(CreateView):
@@ -16,7 +20,7 @@ class RegisterView(CreateView):
     success_url = reverse_lazy('users:login')
     template_name = 'users/register.html'
 
-    def form_valid(self, form):
+    """def form_valid(self, form):
         new_user = form.save(commit=False)
         new_user.is_active = True
         new_user.set_password(form.cleaned_data['password1'])
@@ -27,7 +31,7 @@ class RegisterView(CreateView):
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=[new_user.email]
         )
-        return super().form_valid(form)
+        return super().form_valid(form)"""
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView, StileFormMixin):
