@@ -31,7 +31,8 @@
                             <h4>Пациент: {{ object.user }}</h4>
                             {% endif %}
                         </ul>
-                        {% if not user.is_staff %}
+                        {% if not object.user and not user.is_staff %}
+
                         <button class="btn btn-lg btn-block btn-primary" type="submit"
                                 formaction="{% url 'med:appointments_add' object.pk %}">Записаться на прием
                         </button>
