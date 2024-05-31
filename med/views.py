@@ -1,3 +1,5 @@
+from itertools import chain
+
 from django.shortcuts import render
 from .models import *
 from django.views.generic import ListView, DetailView
@@ -52,8 +54,12 @@ class AppointmentListView(ListView):
             if user.is_staff or user.is_superuser:  # для работников и суперпользователя
                 queryset = super().get_queryset().filter(date__gte=current_datetime).order_by('date', 'diagnostic', )
             else:  # для остальных пользователей
-                queryset = super().get_queryset().filter(user=None,
-                                                         date__gte=current_datetime).order_by('date', 'diagnostic')
+                queryset = list(chain(super().get_queryset().filter(user=self.request.user,
+                                                                    date__gte=current_datetime).order_by('date',
+                                                                                                         'diagnostic'),
+                                      super().get_queryset().filter(
+                                          user=None,
+                                          date__gte=current_datetime).order_by('date', 'diagnostic')))
         else:  # для незарегистрированных пользователей
             queryset = None
         return queryset
